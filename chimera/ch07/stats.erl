@@ -22,12 +22,10 @@ mean(List) ->
 %% @doc Function returns the standard deviation of the list of integers
 -spec(stdv(list()) -> float()).
 stdv(List) -> 
-	Func = fun(X, {TSum, TSumSqr}) -> { X + TSum, X * X + TSumSqr} end,
+	Func = fun(X, {TSum, TSumSqr}) -> { X+TSum, X*X + TSumSqr} end,
 	{Sum, SumSquared} = lists:foldl(Func, {0,0}, List), 
 	Length = erlang:length(List),
-	CalcAAA = (Length * SumSquared) - (Sum * Sum),
-	CalcBBB = CalcAAA / (Length * (Length - 1)),
-	math:sqrt(CalcBBB).
+	math:sqrt( (Length*SumSquared - Sum*Sum)  / (Length * (Length-1)) ).
 
 sum(List) ->
 	lists:foldl(fun(X,Total) -> X + Total end, 0, List).
